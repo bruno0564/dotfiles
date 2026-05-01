@@ -42,3 +42,8 @@ post_hook = 'pkill -USR1 kitty'
 input_path = '~/.config/matugen/templates/matugen-cava'
 output_path = '~/.config/cava/config'
 post_hook = 'pkill -USR1 cava'
+
+[templates.zen]
+input_path = '~/.config/matugen/templates/zen-userchrome.css'
+output_path = '~/.config/zen-userchrome.css'
+post_hook = 'notify-send "Zen Browser" "Reinicia Zen para aplicar los nuevos colores"'
