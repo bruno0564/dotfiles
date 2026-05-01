@@ -4,3 +4,4 @@
 .config/kitty/colors.conf
 .config/rofi/colors.rasi
 .config/cava/config
+*.bak
