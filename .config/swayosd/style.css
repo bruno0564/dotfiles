@@ -1,0 +1,14 @@
+window#osd {
+    padding: 6px 14px;
+    border-radius: 10px;
+}
+
+image {
+    display: none;
+}
+
+progressbar {
+    min-width: 140px;
+    min-height: 5px;
+    border-radius: 4px;
+}

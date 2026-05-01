@@ -49,7 +49,6 @@
 "group/laptop": {
 	"orientation": "inherit",
 	"modules": [
-		"backlight",
 		"battery",
 	]
 },
