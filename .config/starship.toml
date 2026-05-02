@@ -1,0 +1,67 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](fg:surface_container)[ $username ](fg:on_surface bg:surface_container)[](fg:surface_container) \
+[](fg:surface_container)[ $directory ](fg:primary bg:surface_container)[](fg:surface_container)\
+$git_branch\
+$git_status\
+ [](fg:surface_container)[ $time ](fg:secondary bg:surface_container)[](fg:surface_container)\
+$line_break$character"""
+
+palette = 'material_you'
+
+[palettes.material_you]
+primary           = "#dbc66e"
+on_primary        = "#3a3000"
+secondary         = "#d1c6a1"
+on_secondary      = "#373016"
+tertiary          = "#a9d0b3"
+on_tertiary       = "#153723"
+surface           = "#15130b"
+surface_container = "#222017"
+on_surface        = "#e8e2d4"
+error             = "#ffb4ab"
+
+[os]
+disabled = true
+
+[username]
+show_always = true
+style_user = "fg:on_surface bg:surface_container"
+style_root = "fg:error bg:surface_container"
+format = '[$user]($style)'
+
+[directory]
+style = "fg:primary bg:surface_container"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈘 "
+"Downloads" = "󰆛 "
+"Music" = "󰝚 "
+"Pictures" = "󰏨 "
+
+[git_branch]
+symbol = "󰘬 "
+format = ' [](fg:surface_container)[ $symbol$branch](fg:tertiary bg:surface_container)'
+
+[git_status]
+format = '[( $all_status$ahead_behind) ](fg:on_surface bg:surface_container)[](fg:surface_container)'
+style = "bg:surface_container"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:secondary bg:surface_container"
+format = '[$time]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:primary)'
+error_symbol = '[❯](bold fg:error)'
+vimcmd_symbol = '[❮](bold fg:primary)'
