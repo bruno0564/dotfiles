@@ -12,4 +12,5 @@ printf "\033]4;2;${PRIMARY}\007"
 printf "\033]4;3;${ON_PRIMARY}\007"
 printf "\033]4;10;${TERTIARY}\007"
 printf "\033]4;11;${TERTIARY_FIXED}\007"
-cbonsai --live --infinite --time=80 --wait=20 --life=60 --multiplier=4 --leaf="&,+,*" -k 2,3,10,11
+cbonsai --live --print --time=7.5 --life=60 --multiplier=4 --leaf="&,+,*" -k 2,3,10,11
+sleep infinity
