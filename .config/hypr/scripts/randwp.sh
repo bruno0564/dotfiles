@@ -1,23 +1,16 @@
 #!/bin/bash
 
-# === CONFIG ===
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 SYMLINK_PATH="$HOME/.config/hypr/current_wallpaper"
 
-cd "$WALLPAPER_DIR" || exit 1
+# Pick random wallpaper
+SELECTED_PATH=$(find "$WALLPAPER_DIR" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) | shuf -n 1)
+[ -z "$SELECTED_PATH" ] && exit 1
 
-# === handle spaces name
-IFS=$'\n'
-
-# === ICON-PREVIEW SELECTION WITH ROFI, SORTED BY NEWEST ===
-SELECTED_WALL=$(for a in $(ls -t *.jpg *.png *.gif *.jpeg 2>/dev/null); do echo -en "$a\0icon\x1f$a\n"; done | rofi -dmenu -p "")
-[ -z "$SELECTED_WALL" ] && exit 1
-SELECTED_PATH="$WALLPAPER_DIR/$SELECTED_WALL"
-
-# === GENERATE COLORS ===
+# Generate colors
 matugen image "$SELECTED_PATH" --prefer saturation
 
-# === UPDATE STARSHIP COLORS ===
+# Update Starship colors
 COLORS_CSS="$HOME/.config/waybar/colors.css"
 STARSHIP_TOML="$HOME/.config/starship.toml"
 
@@ -30,14 +23,13 @@ for key in primary on_primary secondary on_secondary tertiary on_tertiary surfac
     [ -n "$value" ] && sed -i "/^${key}\s*=/{s|\"#[0-9a-fA-F]*\"|\"${value}\"|}" "$STARSHIP_TOML"
 done
 
-# === RELOAD COLORS ===
+# Reload colors
 hyprctl reload
 pkill -x waybar; waybar &disown
 
-# === SET WALLPAPER ===
+# Set wallpaper
 awww img "$SELECTED_PATH" --transition-type any --transition-fps 60
 
-# === CREATE SYMLINK ===
+# Update symlink
 mkdir -p "$(dirname "$SYMLINK_PATH")"
 ln -sf "$SELECTED_PATH" "$SYMLINK_PATH"
-
