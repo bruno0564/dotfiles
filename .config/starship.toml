@@ -11,15 +11,15 @@ $line_break$character"""
 palette = 'material_you'
 
 [palettes.material_you]
-primary           = "#dbc66e"
-on_primary        = "#3a3000"
-secondary         = "#d1c6a1"
-on_secondary      = "#373016"
-tertiary          = "#a9d0b3"
-on_tertiary       = "#153723"
-surface           = "#15130b"
-surface_container = "#222017"
-on_surface        = "#e8e2d4"
+primary           = "#e5c36c"
+on_primary        = "#3e2e00"
+secondary         = "#d6c5a0"
+on_secondary      = "#392f15"
+tertiary          = "#aecfac"
+on_tertiary       = "#1a361e"
+surface           = "#16130b"
+surface_container = "#231f17"
+on_surface        = "#eae1d4"
 error             = "#ffb4ab"
 
 [os]

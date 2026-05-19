@@ -23,6 +23,8 @@
 
 "modules-left": [
 	"clock",
+	//"custom/separator#dot-line",
+	"mpris",
 	],
 
 "modules-center": [
@@ -30,11 +32,10 @@
 	],
 
 "modules-right": [
-        //"mpris",
-        //"custom/separator#dot-line",
 	"group/laptop",
 	//"custom/separator#blank",
 	//"group/mobo_drawer",
+	"network",
 	"group/audio",
 	"custom/separator#blank",
 	"group/notify",

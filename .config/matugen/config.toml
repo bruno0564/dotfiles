@@ -47,3 +47,8 @@ post_hook = 'pkill -USR1 cava'
 input_path = '~/.config/matugen/templates/zen-userchrome.css'
 output_path = '~/.config/zen-userchrome.css'
 post_hook = 'notify-send "Zen Browser" "Reinicia Zen para aplicar los nuevos colores"'
+
+[templates.vscode]
+input_path = '~/.config/matugen/templates/vscode-colors.json'
+output_path = '~/.config/matugen/vscode-colors-partial.json'
+post_hook = 'bash ~/.config/matugen/merge-vscode-colors.sh'

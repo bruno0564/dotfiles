@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EDUROAM_IDENTITY="bcm61@alu.ua.es"
-EDUROAM_ANON="joyboy@alu.ua.es"
+EDUROAM_ANON="bcm61@alu.ua.es"
 EDUROAM_CERT="/home/joyboy/.config/certs/inal16.der"
 
 WIFI_DEV=$(nmcli -t -f TYPE,DEVICE device | grep "^wifi:" | head -1 | cut -d: -f2)
@@ -50,25 +50,37 @@ if [ "$inuse" = "*" ]; then
     exit 0
 fi
 
-# Eduroam: configuración enterprise automática
+# Eduroam: siempre usar un único perfil guardado
 if [ "$ssid" = "eduroam" ]; then
-    password=$(rofi -dmenu -p "Contraseña eduroam" -password)
-    [ -z "$password" ] && exit 0
+    # Eliminar perfiles duplicados, conservar solo el primero
+    mapfile -t eduroam_uuids < <(nmcli -t -f NAME,UUID connection show | awk -F: '$1=="eduroam"{print $2}')
+    if [ ${#eduroam_uuids[@]} -gt 1 ]; then
+        for uuid in "${eduroam_uuids[@]:1}"; do
+            nmcli connection delete "$uuid" &>/dev/null
+        done
+    fi
 
-    # Eliminar perfil anterior si existe para aplicar config limpia
-    nmcli connection delete "eduroam" 2>/dev/null
-
-    nmcli connection add type wifi con-name "eduroam" ifname "$WIFI_DEV" ssid "eduroam" \
-        wifi-sec.key-mgmt wpa-eap \
-        802-1x.eap peap \
-        802-1x.identity "$EDUROAM_IDENTITY" \
-        802-1x.anonymous-identity "$EDUROAM_ANON" \
-        802-1x.ca-cert "$EDUROAM_CERT" \
-        802-1x.phase2-auth mschapv2 \
-        802-1x.password "$password" \
-        && nmcli connection up "eduroam" \
-        && notify-send "WiFi" "Conectado a eduroam" \
-        || notify-send "WiFi" "Error al conectar a eduroam — comprueba la contraseña"
+    if [ ${#eduroam_uuids[@]} -ge 1 ]; then
+        nmcli connection up "eduroam" \
+            && notify-send "WiFi" "Conectado a eduroam" \
+            || notify-send "WiFi" "Error al conectar a eduroam — ¿contraseña de CV correcta?"
+    else
+        password=$(rofi -dmenu -p "Contraseña eduroam (CV)" -password)
+        [ -z "$password" ] && exit 0
+        nmcli connection add type wifi con-name "eduroam" ifname "$WIFI_DEV" ssid "eduroam" \
+            wifi-sec.key-mgmt wpa-eap \
+            802-1x.eap peap \
+            802-1x.identity "$EDUROAM_IDENTITY" \
+            802-1x.anonymous-identity "$EDUROAM_ANON" \
+            802-1x.ca-cert "$EDUROAM_CERT" \
+            802-1x.phase2-auth mschapv2 \
+            802-1x.password "$password" \
+            connection.autoconnect yes \
+            connection.autoconnect-priority 10 \
+            && nmcli connection up "eduroam" \
+            && notify-send "WiFi" "Conectado a eduroam" \
+            || notify-send "WiFi" "Error al conectar a eduroam — comprueba la contraseña"
+    fi
     exit 0
 fi
 

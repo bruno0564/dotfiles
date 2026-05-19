@@ -85,14 +85,14 @@
 },
 
 "bluetooth": {
-	"format": " ",
-	"format-disabled": "󰂳",
-	"format-connected": "󰂱 {num_connections}",
-	"tooltip-format": " {device_alias}",
+	"format": "󰂯",
+	"format-disabled": "󰂯",
+	"format-connected": "󰂯 {num_connections}",
+	"tooltip-format": "󰂯 {device_alias}",
 	"tooltip-format-connected": "{device_enumerate}",
-	"tooltip-format-enumerate-connected": " {device_alias} 󰂄{device_battery_percentage}%",
-	"tooltip": true,
-	"on-click": "blueman-manager",
+	"tooltip-format-enumerate-connected": "󰂯 {device_alias} 󰂄{device_battery_percentage}%",
+	"tooltip": false,
+	"on-click": "$HOME/.config/hypr/scripts/bluetooth-connect.sh",
 },
 
 "clock": {
@@ -282,6 +282,8 @@
 	"format-icons": [
 		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
 	],
+	"tooltip": false,
+	"on-click": "$HOME/.config/hypr/scripts/network-connect.sh",
 	"on-click-right": "$HOME/.config/hypr/scripts/WaybarScripts.sh --nmtui"
 },
 
@@ -317,7 +319,7 @@
 
 "pulseaudio": {
 	"format": "{icon} {volume}%",
-	"format-bluetooth": "{icon} 󰂰 {volume}%",
+	"format-bluetooth": "󰂯 {volume}%",
 	"format-muted": "󰖁",
 	"format-icons": {
 		"headphone": "",

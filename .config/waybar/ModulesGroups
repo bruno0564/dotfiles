@@ -61,7 +61,7 @@
         },
 	"modules": [
 		"pulseaudio",
-		"pulseaudio#microphone",
+		"bluetooth",
 	]
 },
 
